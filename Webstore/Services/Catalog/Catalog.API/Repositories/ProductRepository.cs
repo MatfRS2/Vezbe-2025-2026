@@ -13,40 +13,40 @@ public class ProductRepository: IProductRepository
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-    public async Task<IEnumerable<Product>> GetProducts()
+    public async Task<IEnumerable<Product>> GetProductsAsync()
     {
         return await _context.Products
             .Find(p => true)
             .ToListAsync();
     }
 
-    public async Task<Product?> GetProductById(string id)
+    public async Task<Product?> GetProductByIdAsync(string id)
     {
         return await _context.Products
             .Find(p => p.Id == id)
             .FirstOrDefaultAsync();
     }
 
-    public async Task<IEnumerable<Product>> GetProductByCategory(string category)
+    public async Task<IEnumerable<Product>> GetProductByCategoryAsync(string category)
     {
         return await _context.Products
             .Find(p => p.Category == category)
             .ToListAsync();
     }
 
-    public async Task CreateProduct(Product product)
+    public async Task CreateProductAsync(Product product)
     {
         await _context.Products.InsertOneAsync(product);
     }
 
-    public async Task<bool> UpdateProduct(Product product)
+    public async Task<bool> UpdateProductAsync(Product product)
     {
         var updateResult = await _context.Products
             .ReplaceOneAsync(p => p.Id == product.Id, product);
         return updateResult.ModifiedCount > 0; 
     }
 
-    public async Task<bool> DeleteProduct(string id)
+    public async Task<bool> DeleteProductAsync(string id)
     {
         var deleteResult = await _context.Products
             .DeleteOneAsync(p => p.Id == id);

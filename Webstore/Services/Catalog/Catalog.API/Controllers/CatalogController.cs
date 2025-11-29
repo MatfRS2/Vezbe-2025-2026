@@ -19,7 +19,7 @@ public class CatalogController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<Product>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
     {
-        var products = await _repository.GetProducts();
+        var products = await _repository.GetProductsAsync();
         return Ok(products);
     }
 
@@ -28,8 +28,8 @@ public class CatalogController : ControllerBase
     [ProducesResponseType(typeof(Product), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<Product>> GetProduct(string id)
     {
-        var product = await _repository.GetProductById(id);
-        if (product == null)
+        var product = await _repository.GetProductByIdAsync(id);
+        if (product is null)
             return NotFound(null);
         return Ok(product);
     }
@@ -40,8 +40,8 @@ public class CatalogController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(string category)
     {
-        var products = await _repository.GetProductByCategory(category);
-        if (products == null)
+        var products = await _repository.GetProductByCategoryAsync(category);
+        if (!products.Any())
             return NotFound(null);
         return Ok(products);
     }
@@ -50,8 +50,8 @@ public class CatalogController : ControllerBase
     [ProducesResponseType(typeof(Product), StatusCodes.Status201Created)]
     public async Task<ActionResult<Product>> CreateProduct([FromBody] Product product)
     {
-        await _repository.CreateProduct(product);
-        return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+        await _repository.CreateProductAsync(product);
+        return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
     }
 
     [HttpPut]
@@ -59,7 +59,7 @@ public class CatalogController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateProduct([FromBody] Product product)
     {
-        var result = await _repository.UpdateProduct(product);
+        var result = await _repository.UpdateProductAsync(product);
         if (!result)
             return NotFound(null);
         return Ok();
@@ -70,7 +70,7 @@ public class CatalogController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteProduct(string id)
     {
-        var result = await _repository.DeleteProduct(id);
+        var result = await _repository.DeleteProductAsync(id);
         if (!result)
             return NotFound(null);
         return Ok();

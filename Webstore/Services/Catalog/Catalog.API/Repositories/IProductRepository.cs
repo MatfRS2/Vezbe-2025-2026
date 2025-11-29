@@ -4,10 +4,10 @@ namespace Catalog.API.Repositories;
 
 public interface IProductRepository
 {
-    Task<IEnumerable<Product>> GetProducts();
-    Task<Product?> GetProductById(string id);
-    Task<IEnumerable<Product>> GetProductByCategory(string category);
-    Task CreateProduct(Product product);
-    Task<bool> UpdateProduct(Product product);
-    Task<bool> DeleteProduct(string id);
+    Task<IEnumerable<Product>> GetProductsAsync();
+    Task<Product?> GetProductByIdAsync(string id);
+    Task<IEnumerable<Product>> GetProductByCategoryAsync(string category);
+    Task CreateProductAsync(Product product);
+    Task<bool> UpdateProductAsync(Product product);
+    Task<bool> DeleteProductAsync(string id);
 }
