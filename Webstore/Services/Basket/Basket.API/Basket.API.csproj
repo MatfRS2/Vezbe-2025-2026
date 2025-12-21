@@ -8,6 +8,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Google.Protobuf" Version="3.33.2" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.76.0" />
+        <PackageReference Include="Grpc.Core" Version="2.46.6" />
+        <PackageReference Include="Grpc.Tools" Version="2.76.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
@@ -21,6 +28,12 @@
       <Content Include="..\..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Protobuf Include="..\..\Discount\Discount.GRPC\Protos\coupon.proto" GrpcServices="Client">
+            <Link>Protos\coupon.proto</Link>
+        </Protobuf>
     </ItemGroup>
 
 </Project>
