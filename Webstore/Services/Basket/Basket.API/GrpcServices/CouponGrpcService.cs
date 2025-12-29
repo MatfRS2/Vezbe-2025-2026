@@ -2,7 +2,7 @@ using Discount.GRPC;
 
 namespace Basket.API.GrpcServices;
 
-public class CouponGrpcService
+public class CouponGrpcService : ICouponGrpcService
 {
     private readonly CouponProtoService.CouponProtoServiceClient _couponProtoServiceClient;
 

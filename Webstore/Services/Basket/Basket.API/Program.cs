@@ -1,5 +1,7 @@
+using Basket.API.Extensions;
 using Basket.API.GrpcServices;
 using Basket.API.Repositories;
+using Basket.API.Services;
 using Discount.GRPC;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,17 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IBasketRepository, BasketRepository>();
-builder.Services.AddGrpcClient<CouponProtoService.CouponProtoServiceClient>(
-    options => options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]));
-builder.Services.AddScoped<CouponGrpcService>();
 builder.Services.AddControllers();
 
-builder.Services.AddStackExchangeRedisCache(
-    opts => {
-        opts.Configuration = builder.Configuration.GetValue<string>("CacheSettings:ConnectionString"); 
-    }
-);
+builder.Services.AddBasketServices(builder.Configuration);
 
 var app = builder.Build();
 
