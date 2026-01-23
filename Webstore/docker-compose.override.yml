@@ -33,6 +33,7 @@ services:
     depends_on:
       - basketdb
       - discount.grpc
+      - rabbitmq
     ports:
       - "8001:8080"
 
@@ -90,4 +91,23 @@ services:
       - discountdb
     ports:
       - "8003:8080"
+
+  ordering.api:
+    container_name: ordering.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:OrderingConnectionString=Server=orderdb;Database=OrderDb;User Id=sa;Password=MATF12345678rs2"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+    depends_on:
+      - orderdb
+      - rabbitmq
+    ports:
+      - "8004:8080"
+
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 

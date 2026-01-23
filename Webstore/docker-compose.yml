@@ -39,6 +39,15 @@ services:
       context: .
       dockerfile: Services/Discount/Discount.GRPC/Dockerfile
 
+  ordering.api:
+    image: ordering.api
+    build:
+      context: .
+      dockerfile: Services/Ordering/Ordering.API/Dockerfile
+
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+
 volumes:
   mongo_data:
   postgres_data:

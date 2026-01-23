@@ -36,4 +36,14 @@ public class BasketController: ControllerBase
         await _service.DeleteBasketAsync(username);
         return Ok();
     }
+    
+    [Route("[action]")]
+    [HttpPost]
+    [ProducesResponseType(typeof(void), StatusCodes.Status202Accepted)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Checkout([FromBody] BasketCheckout basketCheckout)
+    {
+        bool success = await _service.CheckoutAsync(basketCheckout);
+        return success ? Accepted() : BadRequest();
+    }
 }

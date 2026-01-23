@@ -16,7 +16,7 @@ public class Tests
     {
         repo = new TestBasketRepository();
         grpc = new TestCouponGrpcService();
-        service = new BasketService(repo, grpc, new TestLogger());
+        service = new BasketService(repo, grpc, new TestLogger(), null, null);
     }
 
     [Test]
