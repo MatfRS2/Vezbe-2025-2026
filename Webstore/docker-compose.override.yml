@@ -72,6 +72,18 @@ services:
     volumes:
       - mssql_data:/var/opt/mssql
 
+  identitydb:
+    container_name: identitydb
+    environment:
+      - MSSQL_SA_PASSWORD=MATF12345678rs2
+      - ACCEPT_EULA=Y
+    user: root
+    restart: always
+    ports:
+      - "1434:1433"
+    volumes:
+      - mssql_identity_data:/var/opt/mssql
+
   discount.api:
     container_name: discount.api
     environment:

@@ -9,6 +9,9 @@ services:
   orderdb:
     image: mcr.microsoft.com/mssql/server:2022-latest
 
+  identitydb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+
   catalog.api:
     image: catalog.api
     build:
@@ -53,3 +56,4 @@ volumes:
   postgres_data:
   pgadmin_data:
   mssql_data:
+  mssql_identity_data:
