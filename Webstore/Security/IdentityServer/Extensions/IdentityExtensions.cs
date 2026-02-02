@@ -69,11 +69,22 @@ public static class IdentityExtensions
 
     public static IServiceCollection ConfigureMiscellaneousServices(this IServiceCollection services)
     {
+        // AutoMapper
         services.AddAutoMapper(c =>
         {
             c.AddMaps(Assembly.GetExecutingAssembly());
         });
+
+        // Other
         services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+        // CORS
+        services.AddCors(options =>
+        {
+            options.AddPolicy("CorsPolicy", builder =>
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+        });
+
         return services;
     }
 }
